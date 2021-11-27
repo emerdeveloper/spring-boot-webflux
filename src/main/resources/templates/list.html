@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaft.org" lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${tittle}"></title>
+</head>
+<body>
+<h1 th:text="${tittle}"></h1>
+
+<a th:href="@{/saveProductForm}">Crear nuevo producto</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Precio</th>
+        <th>Fecha</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="products: ${products}">
+        <td th:text="${products.id}"></td>
+        <td th:text="${products.name}"></td>
+        <td th:text="${products.price}"></td>
+        <td th:text="${products.createAt}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
