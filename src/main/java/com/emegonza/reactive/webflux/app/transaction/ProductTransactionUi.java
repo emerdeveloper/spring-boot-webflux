@@ -67,6 +67,7 @@ public class ProductTransactionUi extends ProductBaseTransaction {
     public Mono<String> productFormSave(Model model) {
         model.addAttribute("product", new ProductEntity());
         model.addAttribute("tittle", "Guardar producto");
+        model.addAttribute("button", "Crear");
         return Mono.just(templateSaveFile);
     }
 
@@ -81,14 +82,18 @@ public class ProductTransactionUi extends ProductBaseTransaction {
     }
 
     public Mono<String> productFormEdit(String id, Model model) {
-        Mono<ProductEntity> product = findProductById(id)
-                .doOnNext(productEntity ->  LOGGER.info("Producto Guardado "
-                        .concat(productEntity.getName()
-                                .concat(" - ")
-                                .concat(productEntity.getId()))))
-                .defaultIfEmpty(new ProductEntity());
-        model.addAttribute("product", product);
-        model.addAttribute("tittle", "Editar producto");
-        return Mono.just(templateSaveFile);
+        return findProductById(id)
+                .doOnNext(productEntity -> {
+                    LOGGER.info("Producto Guardado "
+                            .concat(productEntity.getName()
+                                    .concat(" - ")
+                                    .concat(productEntity.getId())));
+                    model.addAttribute("product", productEntity);
+                    model.addAttribute("tittle", "Editar producto");
+                    model.addAttribute("button", "Editar");
+                })
+                .switchIfEmpty(Mono.error(new InterruptedException("No existe el prodiucto")))
+                .thenReturn(templateSaveFile)
+                .onErrorResume(ex -> Mono.just("redirect:/list?error=No+existe+el+producto"));
     }
 }

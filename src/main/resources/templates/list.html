@@ -5,6 +5,10 @@
     <title th:text="${tittle}"></title>
 </head>
 <body>
+
+<label th:if="${param.error != null}" th:text="${param.error}"></label>
+<label th:if="${param.success != null}" th:text="${param.success}"></label>
+
 <h1 th:text="${tittle}"></h1>
 
 <a th:href="@{/saveProductForm}">Crear nuevo producto</a>
