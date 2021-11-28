@@ -9,9 +9,11 @@
 <h1 th:text="${tittle}"></h1>
 
 <a th:href="@{/list}">Mostrar lista de productos</a>
+<a th:href="@{/list-limitData}">Mostrar lista de productos con ReactiveDataDriverContextVariable</a>
 
 <div>
     <form th:action="@{/saveProduct}" method="post" th:object="${product}">
+        <input  th:if="${product.id != null}" type="hidden" th:field="*{id}">
         <div>
             <label>Nombre</label>
             <input type="text" th:field="*{name}"/>

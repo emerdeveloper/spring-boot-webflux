@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import reactor.core.publisher.Mono;
 
+//@SessionAttributes("product")
 @Controller
 public class ProductUiController implements ProductUi {
 
@@ -34,12 +35,18 @@ public class ProductUiController implements ProductUi {
     }
 
     @Override
-    public Mono<String> productFormSave(Model model) {
+    public Mono<String> productFormSave(Model model) { //(Model model, SessionStatus status)
+        //status.setComplete(); -> Finish session or destroy the data in session
         return productTransaction.productFormSave(model);
     }
 
     @Override
     public Mono<String> productOperationSave(ProductEntity product) {
         return productTransaction.productOperationSave(product);
+    }
+
+    @Override
+    public Mono<String> productFormEdit(String id, Model model) {
+        return productTransaction.productFormEdit(id, model);
     }
 }

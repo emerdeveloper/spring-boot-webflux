@@ -8,6 +8,8 @@
 <h1 th:text="${tittle}"></h1>
 
 <a th:href="@{/saveProductForm}">Crear nuevo producto</a>
+<a th:href="@{/list-limitData}">Mostrar lista de productos con ReactiveDataDriverContextVariable</a>
+<a th:href="@{/list-chunked}">Mostrar lista de productos con max-chunk-size=1024</a>
 
 <table>
     <thead>
@@ -16,6 +18,7 @@
         <th>Nombre</th>
         <th>Precio</th>
         <th>Fecha</th>
+        <th>Editar</th>
     </tr>
     </thead>
     <tbody>
@@ -24,6 +27,7 @@
         <td th:text="${products.name}"></td>
         <td th:text="${products.price}"></td>
         <td th:text="${products.createAt}"></td>
+        <td><a th:href="@{/editProductForm/} + ${products.id}">Editar</a></td>
     </tr>
     </tbody>
 </table>

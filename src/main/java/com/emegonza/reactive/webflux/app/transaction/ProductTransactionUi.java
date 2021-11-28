@@ -79,4 +79,16 @@ public class ProductTransactionUi extends ProductBaseTransaction {
                                         .concat(productEntity.getId()))))
                 .thenReturn("redirect:".concat(listProductPath));
     }
+
+    public Mono<String> productFormEdit(String id, Model model) {
+        Mono<ProductEntity> product = findProductById(id)
+                .doOnNext(productEntity ->  LOGGER.info("Producto Guardado "
+                        .concat(productEntity.getName()
+                                .concat(" - ")
+                                .concat(productEntity.getId()))))
+                .defaultIfEmpty(new ProductEntity());
+        model.addAttribute("product", product);
+        model.addAttribute("tittle", "Editar producto");
+        return Mono.just(templateSaveFile);
+    }
 }
